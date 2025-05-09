@@ -4,7 +4,7 @@ from readme_generator.readme_builder import build_readme
 
 
 def generate_readme(
-    repo_path: str,
+    repo_path: str = str(Path(__file__).resolve().parent),
     overview: str = "",
     exclude_dirs: set[str] = None,
     exclude_files: set[str] = None,
@@ -26,9 +26,15 @@ def generate_readme(
         f.write(readme_content)
     print(f"✅ README.md generated at {output_path}")
 
+
 def main():
     parser = argparse.ArgumentParser(description="Generate README.md for a repository.")
-    parser.add_argument("repo_path", type=str, help="Path to the repository.")
+    parser.add_argument(
+        "repo_path",
+        type=str,
+        default=str(Path(__file__).resolve().parent),
+        help="Path to the repository. Defaults to the parent directory of the script.",
+    )
     parser.add_argument(
         "--overview",
         type=str,
@@ -51,7 +57,10 @@ def main():
     )
     args = parser.parse_args()
     print(args)
-    generate_readme(args.repo_path, args.overview, set(args.exclude_dirs), set(args.exclude_files))
+    generate_readme(
+        args.repo_path, args.overview, set(args.exclude_dirs), set(args.exclude_files)
+    )
+
 
 if __name__ == "__main__":
     repo_path = Path(__file__).resolve().parent.parent
