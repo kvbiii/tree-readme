@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from readme_generator.emoji_map import get_emoji
 
 DEFAULT_EXCLUDE_DIRS: set[str] = {
@@ -81,23 +82,15 @@ def walk_repo(
             yield path, line, indent
 
             if path.is_dir():
-                excluded_items = [
+                if tree_style and not any(
                     p
                     for p in path.iterdir()
-                    if p.name in exclude_dirs
-                    or p.name in exclude_files
-                    or p.name.endswith(tuple(exclude_files))
-                ]
-                non_excluded_items = [
-                    p for p in path.iterdir() if p not in excluded_items
-                ]
-
-                if tree_style:
-                    if not non_excluded_items:
-                        if not excluded_items:
-                            yield path, f"{new_indent}┗━ (empty)", new_indent
-                        else:
-                            yield path, f"{new_indent}┗━ ...", new_indent
+                    if not (
+                        p.name.endswith(tuple(exclude_dirs))
+                        or p.name.endswith(tuple(exclude_files))
+                    )
+                ):
+                    yield path, f"{new_indent}┗━ ...", new_indent
                 else:
                     yield from _walk(path, new_indent, is_last_stack + [is_last])
 
