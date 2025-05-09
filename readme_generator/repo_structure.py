@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from readme_generator.emoji_map import get_emoji
 
 DEFAULT_EXCLUDE_DIRS: set[str] = {
@@ -8,8 +7,10 @@ DEFAULT_EXCLUDE_DIRS: set[str] = {
     ".idea",
     ".vscode",
     ".ipynb_checkpoints",
+    ".egg-info",
+    "dist",
 }
-DEFAULT_EXCLUDE_FILES: set[str] = {".pyc", ".pyo", ".pyd", ".egg-info", ".DS_Store"}
+DEFAULT_EXCLUDE_FILES: set[str] = {".pyc", ".pyo", ".pyd", ".DS_Store"}
 
 
 def walk_repo(
@@ -30,8 +31,8 @@ def walk_repo(
     Yields:
         Tuple of (path, formatted_line, indent)
     """
-    exclude_dirs = exclude_dirs or DEFAULT_EXCLUDE_DIRS
-    exclude_files = exclude_files or DEFAULT_EXCLUDE_FILES
+    exclude_dirs = (exclude_dirs or set()) | DEFAULT_EXCLUDE_DIRS
+    exclude_files = (exclude_files or set()) | DEFAULT_EXCLUDE_FILES
     root_path = Path(root_dir)
 
     def _walk(
@@ -55,7 +56,8 @@ def walk_repo(
             [
                 p
                 for p in dir_path.iterdir()
-                if p.name not in exclude_dirs and p.name not in exclude_files
+                if p.name.endswith(tuple(exclude_files)) is False
+                and p.name.endswith(tuple(exclude_dirs)) is False
             ],
             key=lambda x: (not x.is_dir(), x.name.lower()),
         )
@@ -82,7 +84,11 @@ def walk_repo(
                 if tree_style and not any(
                     p
                     for p in path.iterdir()
-                    if p.name not in exclude_dirs | exclude_files
+                    if not (
+                        p.name in exclude_dirs
+                        or p.name in exclude_files
+                        or p.name.endswith(tuple(exclude_files))
+                    )
                 ):
                     yield path, f"{new_indent}┗━ (empty)", new_indent
                 else:
