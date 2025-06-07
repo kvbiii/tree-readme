@@ -53,13 +53,21 @@ def generate(
     )
     readme_path = Path(repo_path) / "README.md"
     if readme_path.exists():
-        typer.echo(
-            f"⚠️ README.md already exists at {readme_path.resolve()}. Saving as README_generated.md instead."
-        )
+        try:
+            typer.echo(
+                f"⚠️ README.md already exists at {readme_path.resolve()}. Saving as README_generated.md instead."
+            )
+        except:
+            typer.echo(
+                f"WARNING: README.md already exists at {readme_path.resolve()}. Saving as README_generated.md instead."
+            )
         readme_path = readme_path.with_name("README_generated.md")
     with open(readme_path, "w", encoding="utf-8") as f:
         f.write(readme_content)
-    typer.echo(f"✅ README.md generated at {readme_path.resolve()}")
+    try:
+        typer.echo(f"✅ README.md generated at {readme_path.resolve()}")
+    except:
+        typer.echo(f"README.md generated at {readme_path.resolve()}.")
 
 
 if __name__ == "__main__":

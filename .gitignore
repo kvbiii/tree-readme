@@ -13,3 +13,4 @@ __pycache__/
 !README.md
 !requirements.txt
 !install_package.sh
+!tests/
