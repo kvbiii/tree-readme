@@ -1,8 +1,9 @@
 import subprocess
 from pathlib import Path
 import sys
+
 sys.path.append(str(Path(__file__).resolve().parent.parent))
-print(sys.path)
+
 from readme_generator.generate_readme import generate
 
 
