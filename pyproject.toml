@@ -2,9 +2,12 @@
 requires = ["setuptools>=65.5.0"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = ["tree_readme"]
+
 [project]
 name = "tree-readme"
-version = "1.4.0"
+version = "1.5.0"
 description = "A simple README generator for Python projects."
 readme = "README.md"
 authors = [

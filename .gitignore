@@ -1,28 +1,15 @@
-# Byte-compiled / optimized / DLL files
+# Ignore Python cache and Jupyter checkpoints
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
+.ipynb_checkpoints/
 *.egg-info/
-.installed.cfg
-*.egg
+*dist/
 
-# Pyproject.toml specific
-*.lock
-poetry.lock
-*.dist-info/
-*.egg-info/
+# Ignore everything except specific files and folders
+# (Remove these negations unless you have a global ignore above)
+!.github/workflows/
+!/readme_generator/
+!.gitignore
+!pyproject.toml
+!README.md
+!requirements.txt
+!install_package.sh

@@ -3,17 +3,24 @@ from pathlib import Path
 EMOJI_MAPPING: dict[str, str] = {
     "folder": "📁",
     ".py": "🐍",
+    ".sas": "📶",
     ".ipynb": "📓",
-    ".csv": "📊",
-    ".json": "📋",
-    ".md": "📝",
+    ".sh": "🐚",
+    ".pkl": "🥒",
+    ".txt": "📋",
+    ".json": "📙",
+    ".j2": "🔖",
+    ".gitignore": "👻",
+    ".git": "😺",
+    ".md": "📖",
+    ".toml": "⚙️",
+    ".yaml": "📜",
+    ".yml": "📜",
+    ".dockerfile": "🐳",
     ".txt": "📃",
-    ".yaml": "⚙️",
-    ".yml": "⚙️",
     ".png": "🖼️",
     ".jpg": "🖼️",
-    ".gitignore": "👻",
-    ".dockerfile": "🐳",
+    ".csv": "📊",
     "default": "📄",
 }
 
@@ -30,4 +37,6 @@ def get_emoji(path: Path) -> str:
     """
     if path.is_dir():
         return EMOJI_MAPPING["folder"]
-    return EMOJI_MAPPING.get(path.suffix.lower(), EMOJI_MAPPING["default"])
+    return EMOJI_MAPPING.get(
+        path.name, EMOJI_MAPPING.get(path.suffix, EMOJI_MAPPING["default"])
+    )

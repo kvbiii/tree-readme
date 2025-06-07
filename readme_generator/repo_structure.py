@@ -10,6 +10,8 @@ DEFAULT_EXCLUDE_DIRS: set[str] = {
     ".ipynb_checkpoints",
     ".egg-info",
     "dist",
+    "_env",
+    ".pytest_cache",
 }
 DEFAULT_EXCLUDE_FILES: set[str] = {".pyc", ".pyo", ".pyd", ".DS_Store"}
 
