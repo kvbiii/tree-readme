@@ -3,7 +3,7 @@ requires = ["setuptools>=65.5.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["tree_readme"]
+packages = ["readme_generator"]
 
 [project]
 name = "tree-readme"
