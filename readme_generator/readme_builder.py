@@ -1,5 +1,5 @@
-from datetime import datetime
 import os
+from datetime import datetime
 from readme_generator.repo_structure import walk_repo
 
 README_TEMPLATE: str = """# {repo_name}
@@ -16,6 +16,26 @@ README_TEMPLATE: str = """# {repo_name}
 {descriptions}
 
 ## Installation
+To install the repository, follow these steps:
+1. Clone the repository:
+```bash
+git clone <repo_url>
+```
+
+2. Navigate to the repository directory:
+```bash
+cd {repo_name}
+```
+
+3. Create a virtual environment (optional but recommended):
+```bash
+python -m venv <venv_name>
+```
+
+4. Activate the virtual environment:
+```bash
+source <venv_name>/bin/activate
+```
 
 ## Usage
 
@@ -47,10 +67,8 @@ def build_readme(
         repo_name=repo_name,
         overview=overview_text,
         tree=generate_tree(repo_path, exclude_dirs, exclude_files),
-        descriptions="\n".join(
-            generate_descriptions(repo_path, exclude_dirs, exclude_files)
-        ),
-        date=datetime.now().strftime("%Y-%m-%d %H:%M"),
+        descriptions=generate_descriptions(repo_path, exclude_dirs, exclude_files),
+        date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     )
 
 
@@ -101,4 +119,4 @@ def generate_descriptions(
         tree_style=False,
     ):
         descriptions.append(line)
-    return descriptions
+    return "\n".join(descriptions)

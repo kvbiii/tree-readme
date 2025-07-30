@@ -8,40 +8,40 @@ def generate(
     repo_path: Annotated[
         str,
         typer.Option(
-            help="Path to the repository.",
+            help="Ścieżka do repozytorium.",
         ),
     ] = "",
     overview: Annotated[
         str,
         typer.Option(
-            help="Overview text for the README.",
+            help="Tekst wprowadzający do README.",
         ),
     ] = "",
     exclude_dirs: Annotated[
         list[str],
         typer.Option(
-            help="Directories to exclude from the folder tree. Can be used multiple times.",
+            help="Katalogi do wykluczenia z drzewa folderów. Może być użyte wielokrotnie.",
             show_default=False,
-            rich_help_panel="Folder Tree Options",
+            rich_help_panel="Opcje drzewa folderów",
         ),
     ] = [],
     exclude_files: Annotated[
         list[str],
         typer.Option(
-            help="Files to exclude from the folder tree. Can be used multiple times.",
+            help="Rozszerzenia plików do wykluczenia z drzewa folderów. Może być użyte wielokrotnie.",
             show_default=False,
-            rich_help_panel="Folder Tree Options",
+            rich_help_panel="Opcje drzewa folderów",
         ),
     ] = [],
 ) -> None:
     """
-    Generate README.md for a repository.
+    Generuj README.md dla repozytorium.
 
     Args:
-        repo_path (str): Path to the repository.
-        overview (str): Overview text for the README.
-        exclude_dirs (list[str]): Directories to exclude from the folder tree.
-        exclude_files (list[str]): Files to exclude from the folder tree.
+        repo_path (str): Ścieżka do repozytorium.
+        overview (str): Tekst wprowadzający do README.
+        exclude_dirs (list[str]): Katalogi do wykluczenia z drzewa folderów.
+        exclude_files (list[str]): Pliki do wykluczenia z drzewa folderów.
     """
     if not repo_path:
         repo_path = str(Path.cwd())
@@ -55,19 +55,23 @@ def generate(
     if readme_path.exists():
         try:
             typer.echo(
-                f"⚠️ README.md already exists at {readme_path.resolve()}. Saving as README_generated.md instead."
+                f"⚠️ README.md już istnieje w podanej ścieżce {readme_path.resolve()}. Zapisywanie jako README_generated.md."
             )
         except:
             typer.echo(
-                f"WARNING: README.md already exists at {readme_path.resolve()}. Saving as README_generated.md instead."
+                f"WARNING: README.md już istnieje w podanej ścieżce {readme_path.resolve()}. Zapisywanie jako README_generated.md."
             )
         readme_path = readme_path.with_name("README_generated.md")
     with open(readme_path, "w", encoding="utf-8") as f:
         f.write(readme_content)
     try:
-        typer.echo(f"✅ README.md generated at {readme_path.resolve()}")
+        typer.echo(
+            f"✅ {readme_path.name} zostało wygenerowane w ścieżce {readme_path.resolve()}"
+        )
     except:
-        typer.echo(f"README.md generated at {readme_path.resolve()}.")
+        typer.echo(
+            f"{readme_path.name} wygenerowane w ścieżce {readme_path.resolve()}."
+        )
 
 
 if __name__ == "__main__":

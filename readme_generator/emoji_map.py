@@ -16,7 +16,7 @@ EMOJI_MAPPING: dict[str, str] = {
     ".toml": "⚙️",
     ".yaml": "📜",
     ".yml": "📜",
-    ".dockerfile": "🐳",
+    "Dockerfile": "🐳",
     ".txt": "📃",
     ".png": "🖼️",
     ".jpg": "🖼️",
