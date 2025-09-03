@@ -7,7 +7,7 @@ packages = ["readme_generator"]
 
 [project]
 name = "tree-readme"
-version = "2.2.0"
+version = "2.3.0"
 description = "A simple README generator for Python projects."
 readme = "README.md"
 authors = [
