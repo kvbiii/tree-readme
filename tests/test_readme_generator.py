@@ -54,6 +54,7 @@ EXCLUDE_FILES_LIST = [".pyc", ".pyo", ".pyd", ".DS_Store"]
 
 
 def run_cli(repo_path: str, overview: str) -> subprocess.CompletedProcess:
+    """Runs the CLI command to generate a README file."""
     cmd = [
         sys.executable,
         "-m",
