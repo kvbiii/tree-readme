@@ -1,9 +1,6 @@
 name: Python CI and Publish
 
 on:
-  push:
-    tags-ignore:
-      - "*"
   pull_request:
   workflow_dispatch:
   release:
