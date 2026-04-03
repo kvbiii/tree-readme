@@ -15,7 +15,7 @@ permissions:
   contents: read
 
 env:
-  PYTHON_VERSION: "3.12"
+  PYTHON_VERSION: "3.14"
 
 jobs:
   verify-files-presence:
@@ -75,7 +75,8 @@ jobs:
           python_files=$(find . -type f -name "*.py" -not -path "./.venv/*")
           python -m pylint $python_files \
             --disable=all \
-            --enable=unused-import,wrong-import-order,unused-variable,missing-function-docstring,missing-module-docstring,invalid-name
+            --enable=unused-import,wrong-import-order,unused-variable,import-outside-toplevel,missing-function-docstring,invalid-name \
+            --good-names=X,X_train,X_test,X_valid
 
   requirements-check:
     name: requirements-check
