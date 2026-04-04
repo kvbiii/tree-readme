@@ -57,7 +57,7 @@ def generate(
             typer.echo(
                 f"⚠️ README.md już istnieje w podanej ścieżce {readme_path.resolve()}. Zapisywanie jako README_generated.md."
             )
-        except:
+        except UnicodeEncodeError:
             typer.echo(
                 f"WARNING: README.md już istnieje w podanej ścieżce {readme_path.resolve()}. Zapisywanie jako README_generated.md."
             )
@@ -68,7 +68,7 @@ def generate(
         typer.echo(
             f"✅ {readme_path.name} zostało wygenerowane w ścieżce {readme_path.resolve()}"
         )
-    except:
+    except UnicodeEncodeError:
         typer.echo(
             f"{readme_path.name} wygenerowane w ścieżce {readme_path.resolve()}."
         )

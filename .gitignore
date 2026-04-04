@@ -1,11 +1,10 @@
-# Ignore Python cache and Jupyter checkpoints
 __pycache__/
 .ipynb_checkpoints/
-*.egg-info/
 *dist/
+build/
+*.egg
+*.egg-info/
 
-# Ignore everything except specific files and folders
-# (Remove these negations unless you have a global ignore above)
 !.github/workflows/
 !/readme_generator/
 !.gitignore
