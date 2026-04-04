@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -73,9 +73,9 @@ jobs:
         run: |
           python_files=$(find . -type f -name "*.py" -not -path "./.venv/*")
           python -m pylint $python_files \
-            --disable=all \
-            --enable=unused-import,wrong-import-order,unused-variable,import-outside-toplevel,missing-function-docstring,invalid-name \
-            --good-names=X,X_train,X_test,X_valid
+          --disable=all \
+          --enable=unused-import,wrong-import-order,unused-variable,import-outside-toplevel,missing-function-docstring,invalid-name,bare-except \
+          --good-names=X,X_train,X_test,X_valid
 
   requirements-check:
     name: requirements-check
