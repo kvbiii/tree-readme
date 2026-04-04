@@ -251,7 +251,7 @@ jobs:
     name: verify-wheel
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
-    needs: release-build
+    needs: verify-files-presence
     timeout-minutes: 10
     steps:
       - name: Download built distributions
