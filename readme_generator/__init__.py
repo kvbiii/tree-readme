@@ -1,14 +1,20 @@
-"""
-readme_generator package.
-
-Lazy-load submodules to avoid RuntimeWarning when executing:
-python -m readme_generator.generate_readme
-"""
-
 from __future__ import annotations
 import importlib
+from importlib.metadata import PackageNotFoundError, version
 
-__all__ = ["generate_readme", "emoji_map", "readme_builder", "repo_structure"]
+__version__ = "0+unknown"
+try:
+    __version__ = version("tree-readme")
+except PackageNotFoundError:
+    pass
+
+__all__ = [
+    "__version__",
+    "generate_readme",
+    "emoji_map",
+    "readme_builder",
+    "repo_structure",
+]
 
 
 def __getattr__(name: str):
