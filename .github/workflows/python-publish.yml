@@ -274,7 +274,7 @@ jobs:
         run: |
           WHL=$(ls dist/*.whl | head -1)
           python -m pip install "$WHL"
-          python -c "import tree_readme; print(tree_readme.__version__); print('smoke test passed')"
+          python -c "import readme_generator; print(readme_generator.__version__)"
 
   pypi-publish:
     name: pypi-publish
