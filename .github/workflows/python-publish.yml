@@ -223,29 +223,6 @@ jobs:
             exit 1
           fi
 
-  verify-wheel:
-    name: verify-wheel
-    if: github.event_name == 'release'
-    runs-on: ubuntu-latest
-    needs:
-      - verify-files-presence
-    timeout-minutes: 10
-    steps:
-      - name: Download built distributions
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
-        with:
-          name: release-dists
-          path: dist/
-      - name: Set up Python
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-      - name: Install from wheel and smoke test
-        run: |
-          WHL=$(ls dist/*.whl | head -1)
-          python -m pip install "$WHL"
-          python -c "import tree_readme; print(tree_readme.__version__); print('smoke test passed')"
-
   release-build:
     name: release-build
     if: github.event_name == 'release'
@@ -253,7 +230,6 @@ jobs:
     needs:
       - pytest
       - verify-version
-      - verify-wheel
     timeout-minutes: 15
     steps:
       - name: Checkout repository
@@ -277,12 +253,36 @@ jobs:
           path: dist/
           retention-days: 7
 
+  verify-wheel:
+    name: verify-wheel
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    needs:
+      - release-build
+    timeout-minutes: 10
+    steps:
+      - name: Download built distributions
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-dists
+          path: dist/
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install from wheel and smoke test
+        run: |
+          WHL=$(ls dist/*.whl | head -1)
+          python -m pip install "$WHL"
+          python -c "import tree_readme; print(tree_readme.__version__); print('smoke test passed')"
+
   pypi-publish:
     name: pypi-publish
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     needs:
       - release-build
+      - verify-wheel
     permissions:
       id-token: write
     environment:

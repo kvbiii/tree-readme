@@ -10,7 +10,7 @@ include = ["readme_generator", "readme_generator.*"]
 
 [project]
 name = "tree-readme"
-version = "3.0.2"
+version = "3.0.3"
 description = "Generate clear, structured README files from your repository tree."
 readme = { file = "README.md", content-type = "text/markdown" }
 license = { text = "MIT" }
