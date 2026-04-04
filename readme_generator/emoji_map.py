@@ -7,7 +7,7 @@ EMOJI_MAPPING: dict[str, str] = {
     ".ipynb": "📓",
     ".sh": "🐚",
     ".pkl": "🥒",
-    ".txt": "📋",
+    ".txt": "📃",
     ".json": "📙",
     ".j2": "🔖",
     ".gitignore": "👻",
