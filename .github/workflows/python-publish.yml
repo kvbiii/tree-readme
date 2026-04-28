@@ -4,7 +4,7 @@ on:
   pull_request:
   workflow_dispatch:
   release:
-    types: [published]
+    types: [ published ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -104,11 +104,16 @@ jobs:
           pipdeptree --warn silence --freeze \
             | cut -d'=' -f1 \
             | sed 's/-/_/g' \
+            | sed 's/^[ \t]*//;s/├── //;s/└── //' \
             | tr '[:upper:]' '[:lower:]' \
             | sort -u > installed_packages.txt
+          echo "Installed packages:"
+          cat installed_packages.txt
       - name: Infer imports with pipreqs
         run: |
           pipreqs . --force --encoding=utf-8 --ignore .venv,tests,examples --savepath requirements_from_imports.txt
+          echo "Inferred imports from source code:"
+          cat requirements_from_imports.txt
       - name: Compare imports with installed dependencies
         run: |
           grep -o '^[^=<>]*' requirements_from_imports.txt \
@@ -178,7 +183,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: [ "3.10", "3.11", "3.12", "3.13", "3.14" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
